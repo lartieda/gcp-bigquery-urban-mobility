@@ -1,0 +1,11 @@
+# Editor settings
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Local credentials or environment configuration
+.env
+*.key
+*.json
