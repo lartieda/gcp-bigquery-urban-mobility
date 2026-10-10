@@ -21,6 +21,12 @@ Key findings:
 
 These findings are descriptive and based on the public 2018 dataset; they do not establish causal relationships.
 
+## Dashboard
+
+The project includes a Looker Studio dashboard connected to the BigQuery analytical tables. It presents monthly demand, hourly usage, the busiest departure stations and the weekday/weekend split.
+
+![Urban Mobility Analytics dashboard](docs/dashboard_preview.png)
+
 ## Architecture
 
 ```text
