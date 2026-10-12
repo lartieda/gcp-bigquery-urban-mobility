@@ -21,6 +21,21 @@ Key findings:
 
 These findings are descriptive and based on the public 2018 dataset; they do not establish causal relationships.
 
+## BigQuery ML: station segmentation
+
+The project extends the SQL analytics workflow with a BigQuery ML K-means model that segments departure stations using total departures, average trip duration, subscriber share and customer share. Features are standardised before training so that high-volume stations do not dominate the clustering solely because of scale.
+
+The four-cluster model achieved a Davies-Bouldin Index of **1.278**. This is used as an exploratory quality indicator rather than a universal pass/fail threshold.
+
+| Segment | Stations | Average departures | Average duration | Interpretation |
+|---|---:|---:|---:|---|
+| 1 | 160 | 18,043 | 13.28 min | High-throughput, short-trip stations |
+| 4 | 53 | 7,520 | 69.58 min | Lower-volume stations associated with long trips |
+| 2 | 363 | 4,605 | 15.29 min | Moderate-volume, short-trip stations |
+| 3 | 199 | 3,586 | 25.60 min | Moderate-volume stations with longer trips |
+
+The segments describe patterns in the source data; they do not establish why a station belongs to a particular group.
+
 ## Dashboard
 
 The project includes a Looker Studio dashboard connected to the BigQuery analytical tables. It presents monthly demand, hourly usage, the busiest departure stations and the weekday/weekend split.
@@ -67,7 +82,10 @@ gcp-bigquery-urban-mobility/
 │   ├── 04_route_trip_summary.sql
 │   ├── 05_hourly_trip_summary.sql
 │   ├── 06_day_type_summary.sql
-│   └── 07_monthly_trip_trends.sql
+│   ├── 07_monthly_trip_trends.sql
+│   ├── 08_train_station_segments_bqml.sql
+│   ├── 09_evaluate_station_segments_bqml.sql
+│   └── 10_assign_station_segments_bqml.sql
 ├── docs/
 ├── .gitignore
 └── README.md
@@ -96,11 +114,13 @@ bigquery-public-data.new_york_citibike.citibike_trips
 - Grouping and aggregation
 - Window functions with `LAG`
 - Safe numerical calculations with `SAFE_DIVIDE`
+- BigQuery ML K-means clustering, evaluation and station-level segment assignment
 
 ## Technology
 
 - Google Cloud Platform
 - BigQuery
+- BigQuery ML
 - SQL
 - Git and GitHub
 
