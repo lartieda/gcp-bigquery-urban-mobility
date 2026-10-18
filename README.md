@@ -124,9 +124,3 @@ bigquery-public-data.new_york_citibike.citibike_trips
 - SQL
 - Git and GitHub
 
-## Limitations and next steps
-
-- The source is public historical data and reflects a specific city and period.
-- Results are descriptive rather than causal.
-- A production solution should automate ingestion, monitor data quality and control query costs.
-- Future work could add a Looker Studio dashboard, scheduled queries and machine-learning experimentation with Vertex AI.
