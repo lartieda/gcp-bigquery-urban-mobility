@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_citibike_trips
+    description: Standardized Citi Bike trip records with reusable time-based features.
+    columns:
+      - name: trip_date
+        description: Date on which the trip started.
+        tests:
+          - not_null
+
+      - name: start_hour
+        description: Hour of day in which the trip started, from 0 to 23.
+        tests:
+          - not_null
+
+      - name: day_type
+        description: Classification of the trip date as a weekday or weekend.
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Weekday', 'Weekend']

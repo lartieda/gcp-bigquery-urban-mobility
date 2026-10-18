@@ -124,3 +124,68 @@ bigquery-public-data.new_york_citibike.citibike_trips
 - SQL
 - Git and GitHub
 
+## dbt analytics engineering layer
+
+This project includes a dbt layer that turns the original BigQuery transformation workflow into a modular, tested and documented analytics pipeline.
+
+### Data lineage
+
+```text
+mobility_analytics.trips_2018_stage
+                ↓
+      stg_citibike_trips (view)
+                ↓
+  monthly_trip_summary (table)
+                ↓
+  monthly_trip_trends (table)
+```
+
+- **Source:** the pre-existing cleaned Citi Bike trip table in BigQuery.
+- **Staging model:** standardizes trip records and creates reusable `start_hour` and `day_type` fields.
+- **Mart model:** produces monthly business metrics for reporting and dashboarding.
+- **Trend mart:** calculates month-over-month trip-volume changes from the monthly metrics.
+
+dbt resolves the dependency order automatically through `source()` and `ref()` references.
+
+### Data quality
+
+The dbt project currently includes 19 automated data-quality tests, including:
+
+- Required source fields are not null.
+- `day_type` can only be `Weekday` or `Weekend`.
+- The monthly grain is unique.
+- Monthly metrics are not null.
+- Total trips reconcile with subscriber and customer trip counts.
+
+A dbt test passes only when its validation query returns zero invalid rows.
+
+### Run the dbt project locally
+
+Create and activate a Python environment:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-dbt.txt
+```
+
+Authenticate locally with Google Cloud and configure a dbt BigQuery profile outside the repository:
+
+```bash
+gcloud auth application-default login
+```
+
+Then run all models and tests:
+
+```bash
+dbt build
+```
+
+Generate the interactive documentation and lineage graph:
+
+```bash
+dbt docs generate
+dbt docs serve --no-browser
+```
+
+The dbt profile is intentionally excluded from version control because it contains local environment configuration.

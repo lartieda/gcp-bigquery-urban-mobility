@@ -1,0 +1,2 @@
+# dbt adapter for BigQuery
+dbt-bigquery==1.12.1

@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: mobility_analytics
+    description: Original cleaned Citi Bike trips table created in BigQuery.
+    database: gcp-bigquery-analytics-ml
+    schema: mobility_analytics
+    tables:
+      - name: trips_2018_stage
+        description: Cleaned Citi Bike trips for 2018.
+        columns:
+          - name: trip_date
+            tests:
+              - not_null
+          - name: start_station_name
+            tests:
+              - not_null
+          - name: end_station_name
+            tests:
+              - not_null

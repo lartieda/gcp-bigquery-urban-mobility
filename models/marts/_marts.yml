@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: monthly_trip_summary
+    description: Monthly Citi Bike usage metrics derived from the cleaned 2018 trip data.
+    columns:
+      - name: trip_month
+        description: First day of the calendar month represented by each row.
+        tests:
+          - not_null
+          - unique
+
+      - name: total_trips
+        description: Total number of trips started during the month.
+        tests:
+          - not_null
+
+      - name: active_bikes
+        description: Number of distinct bicycles used during the month.
+        tests:
+          - not_null
+
+      - name: active_start_stations
+        description: Number of distinct stations used as trip origins during the month.
+        tests:
+          - not_null
+
+      - name: avg_trip_duration_minutes
+        description: Mean trip duration in minutes during the month.
+        tests:
+          - not_null
+
+      - name: subscriber_trips
+        description: Number of trips made by annual subscribers.
+        tests:
+          - not_null
+
+      - name: customer_trips
+        description: Number of trips made by short-term customers.
+        tests:
+          - not_null
+
+  - name: monthly_trip_trends
+    description: Month-over-month Citi Bike trip volume trends derived from the monthly summary mart.
+    columns:
+      - name: trip_month
+        description: First day of the calendar month represented by each row.
+        tests:
+          - not_null
+          - unique
+
+      - name: total_trips
+        description: Total number of trips started during the month.
+        tests:
+          - not_null
+
+      - name: previous_month_total_trips
+        description: Total trips in the previous available month. Null for the first month.
+
+      - name: month_over_month_change
+        description: Absolute change in trips compared with the previous available month.
+
+      - name: month_over_month_pct_change
+        description: Percentage change in trips compared with the previous available month.
